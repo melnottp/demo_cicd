@@ -256,12 +256,6 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   }
 }
 
-resource "flexibleengine_cce_addon_v3" "metrics" {
-  template_name    = "metrics-server"
-  cluster_id       = flexibleengine_cce_cluster_v3.cluster.id
-  version       = "1.2.1"
-}
-
 resource "flexibleengine_fgs_function" "function" {
   name        = "${var.project}-FGS-${random_string.id.result}"
   app         = "default"
