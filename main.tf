@@ -11,6 +11,12 @@ terraform {
     workspaces {
       name = "demo_forrester"
     }
+
+  required_providers {
+    flexibleengine = {
+      source = "FlexibleEngineCloud/flexibleengine"
+    }
+  }
 }
     
 # Creation of a Key Pair
