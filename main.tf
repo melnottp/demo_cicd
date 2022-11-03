@@ -287,7 +287,7 @@ resource "flexibleengine_cce_addon_v3" "autoscaler" {
         unremovableNodeRecheckTimeout = 7
       }
     ))
-    flavor = jsonencode(jsondecode(data.flexibleengine_cce_addon_template.autoscaler.spec).parameters.flavor2)
+    flavor = jsonencode(jsondecode(flexibleengine_cce_addon_v3.autoscaler.spec).parameters.flavor2)
   }
 }
 
