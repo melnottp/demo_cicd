@@ -12,17 +12,6 @@ terraform {
       name = "demo_forrester"
     }
     
-  backend "s3" {
-    bucket   = "forester-remote-state"
-    key      = "tf-remote-state"
-    region   = "eu-west-0"
-    endpoint = "https://oss.eu-west-0.prod-cloud-ocb.orange-business.com"
-    skip_region_validation      = true
-    skip_credentials_validation = true
-    skip_metadata_api_check     = true
-  }
-}
-
 # Creation of a Key Pair
 resource "tls_private_key" "key" {
   algorithm   = "RSA"
