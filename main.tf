@@ -5,6 +5,13 @@ resource "flexibleengine_obs_bucket" "admin_bucket" {
 }
 
 terraform {
+  cloud {
+    organization = "pmefetest"
+
+    workspaces {
+      name = "demo_forrester"
+    }
+    
   backend "s3" {
     bucket   = "forester-remote-state"
     key      = "tf-remote-state"
