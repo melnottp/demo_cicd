@@ -11,6 +11,7 @@ terraform {
     workspaces {
       name = "demo_forrester"
     }
+  }
 
   required_providers {
     flexibleengine = {
