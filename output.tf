@@ -29,19 +29,3 @@ output "random_id" {
   value = random_string.id.result
   description = "random string value"
 }
-
-output "kubeconfig" {
-  value = local.kubectl_config_yaml
-}
-
-output "kubeconfig_yaml" {
-  value = local.kubectl_config_yaml
-}
-
-output "kubeconfig_json" {
-  value = local.kubectl_config_json
-}
-
-resource "local_file" "kubeconfig" {
-    content  = local.kubectl_config_json
-    filename = "kubeconfig"
