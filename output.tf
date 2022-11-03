@@ -15,7 +15,6 @@ output "keypair_name" {
 output "keypair" {
   value = tls_private_key.key.private_key_pem
   sensitive = true
-  
 }
 
 output "ssh_port" {
