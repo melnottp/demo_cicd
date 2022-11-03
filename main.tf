@@ -11,6 +11,7 @@ terraform {
     workspaces {
       name = "demo_forrester"
     }
+}
     
 # Creation of a Key Pair
 resource "tls_private_key" "key" {
