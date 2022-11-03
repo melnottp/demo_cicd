@@ -213,10 +213,8 @@ resource "flexibleengine_cce_cluster_v3" "cluster" {
   flavor_id              = "cce.s1.small"
   vpc_id                 = flexibleengine_vpc_v1.vpc.id
   subnet_id              = flexibleengine_networking_network_v2.net.id
-#  cluster_version        = "v1.17.9-r0"
   container_network_type = "overlay_l2"
   authentication_mode    = "rbac"
-#  eip                    = flexibleengine_vpc_eip_v1.eip.publicip[0].ip_address
 }
 
 resource "time_sleep" "wait_for_cce" {
@@ -232,7 +230,7 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   os        = "EulerOS 2.5"
   flavor_id = "s6.xlarge.2"
   key_pair = flexibleengine_compute_keypair_v2.keypair.name
-  initial_node_count = 3
+  initial_node_count = 2
   scale_enable = true
   min_node_count = 1
   max_node_count = 5
@@ -256,6 +254,7 @@ data "flexibleengine_cce_addon_template" "autoscaler" {
   name          = "autoscaler"
   version       = "1.23.6"
 }
+
 resource "flexibleengine_cce_addon_v3" "autoscaler" {
   cluster_id = flexibleengine_cce_cluster_v3.cluster.id
   template_name = "autoscaler"
@@ -292,16 +291,8 @@ resource "flexibleengine_cce_addon_v3" "autoscaler" {
 
 resource "flexibleengine_cce_addon_v3" "metrics" {
   template_name    = "metrics-server"
-  template_version = var.metrics_server_version
   cluster_id       = flexibleengine_cce_cluster_v3.cluster.id
-
-  values {
-    basic = {
-      "swr_addr" = "swr-api.eu-west-0.prod-cloud-ocb.orange-business.com"
-      "swr_user" = "cce-addons"
-    }
-    custom = {}
-  }
+  version       = "1.2.1"
 }
 
 resource "flexibleengine_fgs_function" "function" {
@@ -320,18 +311,18 @@ import json
 import requests
 
 def handler (event, context):
-    Endpoint = "eu-west-0.prod-cloud-ocb.orange-business.com"     
-    Project = context.getProjectID()              
+    Endpoint = "eu-west-0.prod-cloud-ocb.orange-business.com"
+    Project = context.getProjectID()
     print("Authentication and Getting token")
     token = context.getToken()
-     
+
     print("Hibernate CCE latest cluster")
-    url = f"https://cce.{Endpoint}/api/v3/projects/{Project}/clusters/replace_me_cluster-ID/operation/hibernate"
+    url = f"https://cce.{Endpoint}/api/v3/projects/{Project}/clusters/${flexibleengine_cce_cluster_v3.cluster.id}/operation/hibernate"
     payload={}
     headers = {
     'Content-Type': 'application/json',
     'X-Auth-Token': token,
-    'X-Cluster-UUID': 'flexibleengine_cce_cluster_v3.cluster.id'
+    'X-Cluster-UUID': '${flexibleengine_cce_cluster_v3.cluster.id}'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     print(response.status_code)
@@ -348,11 +339,11 @@ EOF
 }
 
 #Create MySQL RDS
-resource "flexibleengine_rds_instance_v3" "mysql" {
+resource "flexibleengine_rds_instance_v3" "instance" {
   depends_on = [flexibleengine_vpc_v1.vpc]
   name              = "${var.project}-MySQL-${random_string.id.result}"
-  flavor            = "rds.mysql.s3.medium.4"
-  availability_zone   = [var.primary_az]
+  flavor            = "rds.mysql.c6.large.2"
+  availability_zone = ["eu-west-0b"]
   security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
   vpc_id            = flexibleengine_vpc_v1.vpc.id
   subnet_id         = flexibleengine_networking_network_v2.net.id
@@ -389,5 +380,6 @@ resource "flexibleengine_dns_recordset_v2" "mysql_private" {
   name = "mysql.${var.dns_zone_name}."
   description = "An example record set"
   type = "A"
-  records = ["${flexibleengine_rds_instance_v3.mysql.private_ips[0]}"]
+  records = ["${flexibleengine_rds_instance_v3.instance.private_ips[0]}"]
 }
+
