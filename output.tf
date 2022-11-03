@@ -1,9 +1,9 @@
-output "guacamole_public_IP" {
+output "bastion_public_IP" {
   value = flexibleengine_vpc_eip_v1.eip.publicip[0].ip_address
   description = "Guacamole Public IP Address"    
 }
 
-output "guacamole_private_IP" {
+output "bastion_private_IP" {
   value = flexibleengine_compute_instance_v2.instance.access_ip_v4
   description = "Guacamole Private IP Address"  
 }
