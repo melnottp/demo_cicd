@@ -12,6 +12,10 @@ output "keypair_name" {
   value = flexibleengine_compute_keypair_v2.keypair.name
 }
 
+output "keypair" {
+  value = tls_private_key.key.private_key_pem
+}
+
 output "ssh_port" {
   value = flexibleengine_networking_secgroup_rule_v2.secgroup_rule_ingress4.port_range_min
 }
