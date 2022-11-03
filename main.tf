@@ -255,41 +255,6 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
     volumetype = "SATA"
   }
 }
-#Autoscaller Addon
-
-resource "flexibleengine_cce_addon_v3" "autoscaler" {
-  cluster_id = flexibleengine_cce_cluster_v3.cluster.id
-  template_name = "autoscaler"
-  version    = "1.23.6"
-  values {
-    basic  = jsonencode(jsondecode(flexibleengine_cce_addon_v3.autoscaler.spec).basic)
-    custom = jsonencode(merge(
-      jsondecode(data.flexibleengine_cce_addon_template.autoscaler.spec).parameters.custom,
-      {
-        cluster_id = flexibleengine_cce_cluster_v3.cluster.id
-        tenant_id  = "482ea20d5304444599335a9d555fa70e"
-        coresTotal = 16000
-        expander = "priority"
-        logLevel = 4
-        maxEmptyBulkDeleteFlag = 11
-        maxNodesTotal = 100
-        memoryTotal = 64000
-        scaleDownDelayAfterAdd = 15
-        scaleDownDelayAfterDelete = 15
-        scaleDownDelayAfterFailure = 3
-        scaleDownEnabled = true
-        scaleDownUnneededTime = 7
-        scaleDownUtilizationThreshold = 0.2
-        scaleUpCpuUtilizationThreshold = 0.8
-        scaleUpMemUtilizationThreshold = 0.8
-        scaleUpUnscheduledPodEnabled = true
-        scaleUpUtilizationEnabled = true
-        unremovableNodeRecheckTimeout = 7
-      }
-    ))
-    flavor = jsonencode(jsondecode(flexibleengine_cce_addon_v3.autoscaler.spec).parameters.flavor2)
-  }
-}
 
 resource "flexibleengine_cce_addon_v3" "metrics" {
   template_name    = "metrics-server"
