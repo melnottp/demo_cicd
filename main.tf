@@ -100,7 +100,7 @@ resource "flexibleengine_networking_secgroup_rule_v2" "secgroup_rule_ingress4" {
   security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
 }
 
-# security group rule to access Guacamole
+# security group rule to access Bastion
 resource "flexibleengine_networking_secgroup_rule_v2" "guacamole_rule_ingress4" {
   direction         = "ingress"
   ethertype         = "IPv4"
@@ -256,18 +256,13 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   }
 }
 #Autoscaller Addon
-data "flexibleengine_cce_addon_template" "autoscaler" {
-  cluster_id    = flexibleengine_cce_cluster_v3.cluster.id
-  name          = "autoscaler"
-  version       = "1.23.6"
-}
 
 resource "flexibleengine_cce_addon_v3" "autoscaler" {
   cluster_id = flexibleengine_cce_cluster_v3.cluster.id
   template_name = "autoscaler"
   version    = "1.23.6"
   values {
-    basic  = jsonencode(jsondecode(data.flexibleengine_cce_addon_template.autoscaler.spec).basic)
+    basic  = jsonencode(jsondecode(flexibleengine_cce_addon_v3.autoscaler.spec).basic)
     custom = jsonencode(merge(
       jsondecode(data.flexibleengine_cce_addon_template.autoscaler.spec).parameters.custom,
       {
