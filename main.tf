@@ -353,7 +353,7 @@ resource "flexibleengine_rds_instance_v3" "instance" {
   availability_zone = ["eu-west-0b"]
   security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
   vpc_id            = flexibleengine_vpc_v1.vpc.id
-  subnet_id         = flexibleengine_networking_network_v2.net.id
+  subnet_id         = flexibleengine_networking_subnet_v2.subnet.id
 
   db {
     type     = "MySQL"
