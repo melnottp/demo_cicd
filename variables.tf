@@ -18,6 +18,11 @@ variable "ssh_port" {
   description = "ssh port to access Bastion."
 }
 
+variable "mysql_port" {
+  default = "3306"
+  description = "ssh port to access Bastion."
+}
+
 variable "guacamole_port" {
   default = "8443"
   description = "HTTPS access to Guacamole"
