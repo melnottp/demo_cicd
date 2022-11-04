@@ -18,7 +18,7 @@ output "keypair" {
 }
 
 output "ssh_port" {
-  value = flexibleengine_networking_secgroup_rule_v2.secgroup_rule_ingress4.port_range_min
+  value = flexibleengine_networking_secgroup_rule_v2.ssh_rule_ingress4.port_range_min
 }
 
 output "vpc_id" {
