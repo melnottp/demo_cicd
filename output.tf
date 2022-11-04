@@ -34,3 +34,7 @@ output "random_id" {
   value = random_string.id.result
   description = "random string value"
 }
+
+output "kubeconfig_json" {
+  value = local.kubectl_config_json
+}
