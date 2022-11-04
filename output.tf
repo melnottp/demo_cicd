@@ -37,4 +37,5 @@ output "random_id" {
 
 output "kubeconfig_json" {
   value = local.kubectl_config_json
+  sensitive = true
 }
