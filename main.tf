@@ -86,7 +86,7 @@ resource "flexibleengine_vpc_eip_v1" "eip" {
 
 # Create security group
 resource "flexibleengine_networking_secgroup_v2" "secgroup" {
-  name = "ts-secgroup-${random_string.id.result}"
+  name = "${var.project}-secgroup-${random_string.id.result}"
 }
 
 # Add rules to the security group
