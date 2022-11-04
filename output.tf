@@ -39,3 +39,8 @@ output "kubeconfig_json" {
   value = local.kubectl_config_json
   sensitive = true
 }
+
+output "elb_id" {
+  description = "ID of the created vpc"
+  value       = flexibleengine_lb_loadbalancer_v2.elb_1.id
+}
