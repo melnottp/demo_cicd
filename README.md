@@ -12,6 +12,9 @@ In this repository you will find an example of deployment of the following resou
   - Subnet : 10.0.1.0/24
   - NAT Gateway 
     - an SNAT rule : to allow CCE nodes to access internet and pull docker images
+  - Elastic Load Balancer
+    - 1 Public IP
+  - Anti DDoS to protect Elastic Load Balancer public IP
   - Bastion server (to access infrastructure)
     - 1 EIP
   - Security Group
