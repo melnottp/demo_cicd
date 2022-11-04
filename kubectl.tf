@@ -13,7 +13,7 @@ locals {
           server                     = local.kubectl_internal_server
           certificate-authority-data = local.cluster_certificate_authority_data
         }
-        name = "${var.name}-cluster-internal"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster-internal"
       },
       {
         cluster = {
@@ -21,23 +21,23 @@ locals {
           server                     = local.kubectl_internal_server
           certificate-authority-data = ""
         }
-        name = "${var.name}-cluster-insecure-internal"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster-insecure-internal"
       },
     ]
     contexts = [
       {
         context = {
-          cluster = "${var.name}-cluster-internal"
+          cluster = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster-internal"
           user    = "terraform"
         }
-        name = "${var.name}-internal"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-internal"
       },
       {
         context = {
-          cluster = "${var.name}-cluster-insecure-internal"
+          cluster = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster-insecure-internal"
           user    = "terraform"
         }
-        name = "${var.name}-insecure-internal"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-insecure-internal"
       },
     ]
   }
@@ -49,7 +49,7 @@ locals {
           server                     = local.kubectl_external_server
           certificate-authority-data = local.cluster_certificate_authority_data
         }
-        name = "${var.name}-cluster"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster"
       },
       {
         cluster = {
@@ -57,31 +57,31 @@ locals {
           server                     = local.kubectl_external_server
           certificate-authority-data = ""
         }
-        name = "${var.name}-cluster-insecure"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster-insecure"
       },
     ]
     contexts = [
       {
         context = {
-          cluster = "${var.name}-cluster"
+          cluster = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster"
           user    = "terraform"
         }
-        name = var.name
+        name = flexibleengine_cce_cluster_v3.cluster.name
       },
       {
         context = {
-          cluster = "${var.name}-cluster-insecure"
+          cluster = "${flexibleengine_cce_cluster_v3.cluster.name}-cluster-insecure"
           user    = "terraform"
         }
-        name = "${var.name}-insecure"
+        name = "${flexibleengine_cce_cluster_v3.cluster.name}-insecure"
       },
     ]
   }
   kubectl_config_raw = {
     apiVersion      = "v1"
-    clusters        = local.cluster_config.public_cluster ? concat(local.kubectl_config_raw_external.clusters, local.kubectl_config_raw_internal.clusters) : local.kubectl_config_raw_internal.clusters
-    contexts        = local.cluster_config.public_cluster ? concat(local.kubectl_config_raw_external.contexts, local.kubectl_config_raw_internal.contexts) : local.kubectl_config_raw_internal.contexts
-    current-context = local.cluster_config.public_cluster ? var.name : "${var.name}-internal"
+    clusters        = local.kubectl_config_raw_internal.clusters
+    contexts        = local.kubectl_config_raw_internal.contexts
+    current-context = "${flexibleengine_cce_cluster_v3.cluster.name}-internal"
     kind            = "Config"
     preferences     = {}
     users = [
