@@ -224,7 +224,7 @@ resource "flexibleengine_rds_instance_v3" "instance" {
 
   db {
     type     = "MySQL"
-    version  = "8.0"
+    version  = "5.7"
     password = "${var.mysql_password}"
     port     = "3306"
   }
@@ -325,7 +325,7 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   os        = "EulerOS 2.5"
   flavor_id = "s6.xlarge.2"
   key_pair = flexibleengine_compute_keypair_v2.keypair.name
-  initial_node_count = 2
+  initial_node_count = 1
   scale_enable = true
   min_node_count = 1
   max_node_count = 5
