@@ -212,6 +212,51 @@ resource "flexibleengine_compute_floatingip_associate_v2" "fip_1" {
   instance_id = flexibleengine_compute_instance_v2.instance.id
 }
 
+#Create MySQL RDS
+resource "flexibleengine_rds_instance_v3" "instance" {
+  depends_on = [flexibleengine_networking_network_v2.net]
+  name              = "${var.project}-MySQL-${random_string.id.result}"
+  flavor            = "rds.mysql.c6.large.2"
+  availability_zone = ["eu-west-0b"]
+  security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
+  vpc_id            = flexibleengine_vpc_v1.vpc.id
+  subnet_id         = flexibleengine_networking_network_v2.net.id
+
+  db {
+    type     = "MySQL"
+    version  = "8.0"
+    password = "${var.mysql_password}"
+    port     = "3306"
+  }
+  volume {
+    type = "COMMON"
+    size = 100
+  }
+  backup_strategy {
+    start_time = "08:00-09:00"
+    keep_days  = 1
+  }
+}
+
+resource "flexibleengine_dns_zone_v2" "services_zone" {
+  email ="hostmaster@example.com"
+  name = "${var.dns_zone_name}."
+  description = "Zone for tooling services"
+  zone_type = "private"
+  router {
+      router_region = "eu-west-0"
+      router_id = flexibleengine_vpc_v1.vpc.id
+    }
+}
+
+resource "flexibleengine_dns_recordset_v2" "mysql_private" {
+  zone_id = flexibleengine_dns_zone_v2.services_zone.id
+  name = "mysql.${var.dns_zone_name}."
+  description = "An example record set"
+  type = "A"
+  records = ["${flexibleengine_rds_instance_v3.instance.private_ips[0]}"]
+}
+
 ##Create a CCE Cluster
 resource "flexibleengine_cce_cluster_v3" "cluster" {
   depends_on = [time_sleep.wait_for_vpc]
@@ -222,38 +267,6 @@ resource "flexibleengine_cce_cluster_v3" "cluster" {
   subnet_id              = flexibleengine_networking_network_v2.net.id
   container_network_type = "overlay_l2"
   authentication_mode    = "rbac"
-}
-
-resource "time_sleep" "wait_for_cce" {
-  create_duration = "30s"
-  depends_on = [flexibleengine_cce_cluster_v3.cluster]
-}
-
-#Create a nodepool inside the CCE cluster
-resource "flexibleengine_cce_node_pool_v3" "pool" {
-  depends_on = [time_sleep.wait_for_cce]
-  name       = "${var.project}-pool-${random_string.id.result}"
-  cluster_id = flexibleengine_cce_cluster_v3.cluster.id
-  os        = "EulerOS 2.5"
-  flavor_id = "s6.xlarge.2"
-  key_pair = flexibleengine_compute_keypair_v2.keypair.name
-  initial_node_count = 2
-  scale_enable = true
-  min_node_count = 1
-  max_node_count = 5
-  type = "vm"
-  labels = {
-    pool = "${var.project}-pool"
-  }
-  root_volume {
-    size       = "40"
-    volumetype = "SATA"
-  }
-
-  data_volumes {
-    size       = "100"
-    volumetype = "SATA"
-  }
 }
 
 resource "flexibleengine_fgs_function" "function" {
@@ -299,48 +312,36 @@ def handler (event, context):
 EOF
 }
 
-#Create MySQL RDS
-resource "flexibleengine_rds_instance_v3" "instance" {
-  depends_on = [flexibleengine_vpc_v1.vpc]
-  name              = "${var.project}-MySQL-${random_string.id.result}"
-  flavor            = "rds.mysql.c6.large.2"
-  availability_zone = ["eu-west-0b"]
-  security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
-  vpc_id            = flexibleengine_vpc_v1.vpc.id
-  subnet_id         = flexibleengine_networking_network_v2.net.id
+resource "time_sleep" "wait_for_cce" {
+  create_duration = "30s"
+  depends_on = [flexibleengine_cce_cluster_v3.cluster]
+}
 
-  db {
-    type     = "MySQL"
-    version  = "8.0"
-    password = "${var.mysql_password}"
-    port     = "3306"
+#Create a nodepool inside the CCE cluster
+resource "flexibleengine_cce_node_pool_v3" "pool" {
+  depends_on = [time_sleep.wait_for_cce]
+  name       = "${var.project}-pool-${random_string.id.result}"
+  cluster_id = flexibleengine_cce_cluster_v3.cluster.id
+  os        = "EulerOS 2.5"
+  flavor_id = "s6.xlarge.2"
+  key_pair = flexibleengine_compute_keypair_v2.keypair.name
+  initial_node_count = 2
+  scale_enable = true
+  min_node_count = 1
+  max_node_count = 5
+  type = "vm"
+  labels = {
+    pool = "${var.project}-pool"
   }
-  volume {
-    type = "COMMON"
-    size = 100
+  root_volume {
+    size       = "40"
+    volumetype = "SATA"
   }
-  backup_strategy {
-    start_time = "08:00-09:00"
-    keep_days  = 1
+
+  data_volumes {
+    size       = "100"
+    volumetype = "SATA"
   }
 }
 
-resource "flexibleengine_dns_zone_v2" "services_zone" {
-  email ="hostmaster@example.com"
-  name = "${var.dns_zone_name}."
-  description = "Zone for tooling services"
-  zone_type = "private"
-  router {
-      router_region = "eu-west-0"
-      router_id = flexibleengine_vpc_v1.vpc.id
-    }
-}
-
-resource "flexibleengine_dns_recordset_v2" "mysql_private" {
-  zone_id = flexibleengine_dns_zone_v2.services_zone.id
-  name = "mysql.${var.dns_zone_name}."
-  description = "An example record set"
-  type = "A"
-  records = ["${flexibleengine_rds_instance_v3.instance.private_ips[0]}"]
-}
 
