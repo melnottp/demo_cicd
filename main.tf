@@ -90,7 +90,7 @@ resource "flexibleengine_networking_secgroup_v2" "secgroup" {
 }
 
 # Add rules to the security group
-resource "flexibleengine_networking_secgroup_rule_v2" "secgroup_rule_ingress4" {
+resource "flexibleengine_networking_secgroup_rule_v2" "ssh_rule_ingress4" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
@@ -101,7 +101,7 @@ resource "flexibleengine_networking_secgroup_rule_v2" "secgroup_rule_ingress4" {
 }
 
 # Add rules to access MySQL
-resource "flexibleengine_networking_secgroup_rule_v2" "secgroup_rule_ingress4" {
+resource "flexibleengine_networking_secgroup_rule_v2" "mysql_rule_ingress4" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
@@ -112,7 +112,7 @@ resource "flexibleengine_networking_secgroup_rule_v2" "secgroup_rule_ingress4" {
 }
 
 # security group rule to access Bastion
-resource "flexibleengine_networking_secgroup_rule_v2" "guacamole_rule_ingress4" {
+resource "flexibleengine_networking_secgroup_rule_v2" "bastion_rule_ingress4" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
