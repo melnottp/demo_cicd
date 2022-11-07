@@ -225,7 +225,7 @@ resource "flexibleengine_compute_floatingip_associate_v2" "fip_1" {
 
 #Create MySQL RDS
 resource "flexibleengine_rds_instance_v3" "instance" {
-  depends_on = flexibleengine_networking_subnet_v2.subnet
+  depends_on = [flexibleengine_networking_subnet_v2.subnet]
   name              = "${var.project}-MySQL-${random_string.id.result}"
   flavor            = "rds.mysql.c6.large.2"
   availability_zone = ["eu-west-0b"]
