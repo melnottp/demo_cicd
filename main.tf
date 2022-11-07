@@ -187,6 +187,7 @@ resource "flexibleengine_vpc_eip_v1" "eip_elb" {
 }
 
 resource "flexibleengine_antiddos_v1" "myantiddos" {
+  depends_on = [flexibleengine_vpc_eip_v1.eip_elb]
   floating_ip_id         = flexibleengine_vpc_eip_v1.eip_elb.id
   enable_l7              = true
   traffic_pos_id         = 1
