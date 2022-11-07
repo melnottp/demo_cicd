@@ -54,5 +54,5 @@ This may work for a while if you are a single team member, if your teams  grow i
 
 #### Schema
 
-![](images/tooling.drawio.png)
+![](images/tooling.png)
 
