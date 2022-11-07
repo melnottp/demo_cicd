@@ -200,7 +200,7 @@ resource "flexibleengine_antiddos_v1" "myantiddos" {
 resource "flexibleengine_compute_instance_v2" "instance" {
   depends_on = [time_sleep.wait_for_vpc]
   name              = "${var.project}-bastion-${random_string.id.result}"
-  flavor_id         = "s6.small.1"
+  flavor_id         = "s6.large.2"
   key_pair          = flexibleengine_compute_keypair_v2.keypair.name
   security_groups   = [flexibleengine_networking_secgroup_v2.secgroup.name]
   user_data = data.template_cloudinit_config.config.rendered
@@ -209,7 +209,7 @@ resource "flexibleengine_compute_instance_v2" "instance" {
     uuid = flexibleengine_networking_network_v2.net.id
   }
   block_device { # Boots from volume
-    uuid                  = "2e2f7d2f-e931-441a-9afb-d130670392e0"
+    uuid                  = "c2280a5f-159f-4489-a107-7cf0c7efdb21"
     source_type           = "image"
     volume_size           = "40"
     boot_index            = 0
