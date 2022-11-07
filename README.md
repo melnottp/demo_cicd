@@ -52,7 +52,7 @@ This may work for a while if you are a single team member, if your teams  grow i
 
 ![](images/workflow.png)
 
-#### Schema
+# Schema
 
 ![](images/tooling.png)
 
