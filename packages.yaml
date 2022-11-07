@@ -12,6 +12,7 @@ packages:
 runcmd:
   - sed -i -e '/^Port/s/^.*$/Port 4444/' etc/ssh/sshd_config
   - service ssh restart
+  - sudo apt update  
   - cd /usr/local && wget https://telescope-eu-west-0.oss.eu-west-0.prod-cloud-ocb.orange-business.com/scripts/agentInstall.sh && chmod 755 agentInstall.sh && ./agentInstall.sh
   - wget --no-check-certificate 'https://hss-agent.oss.eu-west-0.prod-cloud-ocb.orange-business.com/linux/HwAgentInstall_64.sh' && chmod +x HwAgentInstall_64.sh && ./HwAgentInstall_64.sh
   - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -25,7 +26,6 @@ runcmd:
   - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
   - chmod 700 get_helm.sh
   - ./get_helm.sh
-  - sudo apt update
   - sudo apt install apt-transport-https ca-certificates curl software-properties-common
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
