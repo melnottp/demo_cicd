@@ -31,6 +31,19 @@ In this repository you will find an example of deployment of the following resou
 
 # Workflow
 
+
+![](images/workflow.png)
+
+#### **GitHub Repositoy**
+
+This repository host our Infrastructure-as-Code (IaC) template which will be use to deploy on Flexible Engine.
+
+#### **GitHub Actions:**
+
+**GitHub Actions** is a continuous integration and continuous delivery (CI/CD) platform that allows to automate your build, test, and deployment pipeline. You  can create workflows that build and test every pull request to your  repository or deploy merged pull requests to production.
+
+Any push or pull request on this repo will trigger a Terraform plan then apply on Terraform Cloud.
+
 #### **Terraform Cloud:**
 
 For this demonstration we will use **Terraform Cloud** which is HashiCorp’s managed service. 
@@ -38,19 +51,6 @@ For this demonstration we will use **Terraform Cloud** which is HashiCorp’s ma
 That will provision infrastructure in a remote environment that is optimized for the **Terraform workflow**.
 
 **Terraform Cloud** enables infrastructure automation for provisioning, compliance, and management of any cloud, data center, and service.
-
-
-
-#### **GitHub Actions:**
-
-Terraform CLI or Terraform console can be used to deploy infrastructures locally.
-
-This may work for a while if you are a single team member, if your teams  grow it will be crucial to centralize deployment for all team members to have visibility, control and rollback. 
-
-**GitHub Actions** is a continuous integration and continuous delivery (CI/CD) platform that allows to automate your build, test, and deployment pipeline. You  can create workflows that build and test every pull request to your  repository or deploy merged pull requests to production.
-
-
-![](images/workflow.png)
 
 # Schema
 
