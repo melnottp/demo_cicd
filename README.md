@@ -55,4 +55,4 @@ That will provision infrastructure in a remote environment that is optimized for
 # Schema
 
 ![](images/tooling.png)
-.
+
