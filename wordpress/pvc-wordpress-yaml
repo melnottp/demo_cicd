@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cce-evs-wp
+  labels:
+    app: wordpress
+  namespace: default
+  annotations:
+    everest.io/disk-volume-type: SATA
+    volume.beta.kubernetes.io/storage-provisioner: everest-csi-provisioner
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: csi-disk
