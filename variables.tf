@@ -1,5 +1,5 @@
 variable "project" {
-  default = "demo"
+  default = "forrester"
   description = "Short descriptive, readable label of the project you are working on. Is utilized as a part of resource names."
 }
 
