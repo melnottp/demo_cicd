@@ -1,0 +1,4 @@
+CREATE USER 'wordpress'@'%' IDENTIFIED BY 'password-123';
+GRANT SELECT ON * . * TO 'wordpress'@'%';
+CREATE DATABASE wordpress;
+GRANT ALL PRIVILEGES ON `wordpress` . * TO 'wordpress'@'%';
