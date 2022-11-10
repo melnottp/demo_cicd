@@ -1,6 +1,6 @@
 output "bastion_public_IP" {
   value = flexibleengine_vpc_eip_v1.eip.publicip[0].ip_address
-  description = "Guacamole Public IP Address"    
+  description = "Bastion public IP Address"    
 }
 
 output "bastion_private_IP" {
@@ -47,4 +47,9 @@ output "kubeconfig_json" {
 output "elb_id" {
   description = "ID of the created vpc"
   value       = flexibleengine_lb_loadbalancer_v2.elb_1.id
+}
+
+output "bastion_public_IP" {
+  value = flexibleengine_vpc_eip_v1.eip_elb.publicip[0].ip_address
+  description = "ELB public IP Address"    
 }
