@@ -26,8 +26,12 @@ output "vpc_id" {
   value       = flexibleengine_vpc_v1.vpc.id
 }
 
-output "admin_cidr" {
-  value = flexibleengine_networking_subnet_v2.subnet.cidr
+output "frontend_cidr" {
+  value = flexibleengine_networking_subnet_v2.front_subnet.cidr
+}
+
+output "backend_cidr" {
+  value = flexibleengine_networking_subnet_v2.back_subnet.cidr
 }
 
 output "random_id" {
