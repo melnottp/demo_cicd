@@ -128,7 +128,7 @@ resource "flexibleengine_networking_secgroup_rule_v2" "mysql_rule_ingress4" {
   protocol          = "tcp"
   port_range_min    = "${var.mysql_port}"
   port_range_max    = "${var.mysql_port}"
-  remote_ip_prefix  = "${var.subnet_cidr}"
+  remote_ip_prefix  = "${var.back_subnet_cidr}"
   security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
 }
 
@@ -173,7 +173,7 @@ resource "flexibleengine_nat_gateway_v2" "nat_1" {
   description = "demo NATGW for terraform"
   spec        = "1"
   vpc_id      = flexibleengine_vpc_v1.vpc.id
-  subnet_id   = flexibleengine_networking_network_v2.net.id
+  subnet_id   = flexibleengine_networking_network_v2.front_net.id
 }
 
 #Add SNAT rule for Frontend subnet
@@ -255,7 +255,7 @@ resource "flexibleengine_compute_floatingip_associate_v2" "fip_1" {
 
 #Create MySQL RDS
 resource "flexibleengine_rds_instance_v3" "instance" {
-  depends_on = [flexibleengine_networking_subnet_v2.back_net]
+  depends_on = [flexibleengine_networking_subnet_v2.back_subnet]
   name              = "${var.project}-MySQL-${random_string.id.result}"
   flavor            = "rds.mysql.c6.large.2"
   availability_zone = ["eu-west-0b"]
