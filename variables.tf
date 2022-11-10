@@ -29,17 +29,27 @@ variable "guacamole_port" {
 }
 
 variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+  default = "192.168.0.0/16"
   description = "VPC CIDR."
 }
 
-variable "subnet_cidr" {
-  default = "10.0.1.0/24"
+variable "front_subnet_cidr" {
+  default = "192.168.1.0/24"
   description = "Subnet CIDR."
 }
 
-variable "gateway_ip" {
-  default = "10.0.1.1"
+variable "back_subnet_cidr" {
+  default = "192.168.2.0/24"
+  description = "Subnet CIDR."
+}
+
+variable "front_gateway_ip" {
+  default = "192.168.1.1"
+  description = "Subnet gateway IP."
+}
+
+variable "back_gateway_ip" {
+  default = "192.168.2.1"
   description = "Subnet gateway IP."
 }
 
