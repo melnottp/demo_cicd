@@ -49,7 +49,7 @@ output "elb_id" {
   value       = flexibleengine_lb_loadbalancer_v2.elb_1.id
 }
 
-output "bastion_public_IP" {
+output "ELB_public_IP" {
   value = flexibleengine_vpc_eip_v1.eip_elb.publicip[0].ip_address
   description = "ELB public IP Address"    
 }
