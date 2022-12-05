@@ -308,6 +308,7 @@ resource "flexibleengine_cce_cluster_v3" "cluster" {
   subnet_id              = flexibleengine_networking_network_v2.back_net.id
   container_network_type = "overlay_l2"
   authentication_mode    = "rbac"
+  annotations            = { "cluster.install.addons.external/install" = "[{\"addonTemplateName\":\"icagent\"}]" }
 }
 
 resource "flexibleengine_fgs_function" "function" {
