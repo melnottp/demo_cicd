@@ -81,6 +81,6 @@ variable "mysql_password" {
 }
 
 variable "dns_zone_name" {
-  default = "forrester.services"
+  default = "${var.project}.services"
   description = "private DNS zone"
 }
