@@ -56,3 +56,6 @@ That will provision infrastructure in a remote environment that is optimized for
 
 ![](images/tooling.png)
 
+# Demonstration
+
+![](images/demo.png)
