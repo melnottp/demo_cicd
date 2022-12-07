@@ -3,6 +3,11 @@ variable "project" {
   description = "Short descriptive, readable label of the project you are working on. Is utilized as a part of resource names."
 }
 
+variable "dns_zone_name" {
+  default = "demo.services"
+  description = "private DNS zone"
+}
+
 variable "remote_ip" {
   default = "90.84.172.45/32"
   description = "remote IP allowed for ssh access to Bastion"
@@ -78,9 +83,4 @@ variable "standby_az" {
 variable "mysql_password" {
   default = "PaSsW0rd22!"
   description = "RDS primary AZ"
-}
-
-variable "dns_zone_name" {
-  default = "${var.project}.services"
-  description = "private DNS zone"
 }
