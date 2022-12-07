@@ -362,7 +362,7 @@ resource "time_sleep" "wait_for_cce" {
 #Create a nodepool inside the CCE cluster
 resource "flexibleengine_cce_node_pool_v3" "pool" {
   depends_on = [time_sleep.wait_for_cce]
-  name       = "${var.project}-pool-${random_string.id.result}"
+  name       = "${var.project}-node_pool-${random_string.id.result}"
   cluster_id = flexibleengine_cce_cluster_v3.cluster.id
   os        = "EulerOS 2.5"
   flavor_id = "s6.xlarge.2"
