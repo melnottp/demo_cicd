@@ -1,10 +1,10 @@
 variable "project" {
-  default = "demofe"
+  default = "demo"
   description = "Short descriptive, readable label of the project you are working on. Is utilized as a part of resource names."
 }
 
 variable "dns_zone_name" {
-  default = "demofe.services"
+  default = "demo.services"
   description = "private DNS zone"
 }
 
