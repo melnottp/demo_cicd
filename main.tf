@@ -349,11 +349,11 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   depends_on = [time_sleep.wait_for_cce]
   name       = "${var.project}-node-pool-${random_string.id.result}"
   cluster_id = flexibleengine_cce_cluster_v3.cluster.id
-  os        = "EulerOS 2.5"
+  os        = "EulerOS 2.9"
   flavor_id = "s6.xlarge.2"
   key_pair = flexibleengine_compute_keypair_v2.keypair.name
   initial_node_count = 1
-  scale_enable = true
+  scale_enable = false
   min_node_count = 1
   max_node_count = 5
   type = "vm"
