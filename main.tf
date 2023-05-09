@@ -290,7 +290,7 @@ resource "flexibleengine_cce_cluster_v3" "cluster" {
   depends_on = [time_sleep.wait_for_vpc]
   name                   = "${var.project}-cluster-${random_string.id.result}"
   cluster_type           = "VirtualMachine"
-  cluster_version        = "1.23.6"
+  cluster_version        = "1.23"
   flavor_id              = "cce.s1.small"
   vpc_id                 = flexibleengine_vpc_v1.vpc.id
   subnet_id              = flexibleengine_vpc_subnet_v1.back_subnet.id
