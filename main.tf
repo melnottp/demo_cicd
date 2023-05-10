@@ -351,7 +351,7 @@ resource "flexibleengine_cce_node_v3" "node_1" {
   cluster_id        = flexibleengine_cce_cluster_v3.cluster.id
   name              = "${var.project}-node-${random_string.id.result}"
   flavor_id         = "s3.large.2"
-  availability_zone = "AZ3"
+  availability_zone = "eu-west-0a"
   key_pair          = flexibleengine_compute_keypair_v2.keypair.name
 
   root_volume {
