@@ -294,7 +294,7 @@ resource "flexibleengine_cce_cluster_v3" "cluster" {
   flavor_id              = "cce.s1.small"
   vpc_id                 = flexibleengine_vpc_v1.vpc.id
   subnet_id              = flexibleengine_vpc_subnet_v1.back_subnet.id
-  container_network_type = "overlay_l2"
+  container_network_type = "vpc-router"
   authentication_mode    = "rbac"
   annotations            = { "cluster.install.addons.external/install" = "[{\"addonTemplateName\":\"icagent\"}]" }
 }
