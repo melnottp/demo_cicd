@@ -22,7 +22,7 @@ terraform {
 
 provider "flexibleengine" {
   domain_name = "OCB0001661"
-  tenant_name = "eu-west-0_pme"
+  tenant_name = "eu-west-0_wb"
   region      = "eu-west-0"
   auth_url    = "https://iam.eu-west-0.prod-cloud-ocb.orange-business.com/v3"
 }
@@ -348,7 +348,7 @@ resource "flexibleengine_cce_node_v3" "node_1" {
   cluster_id        = flexibleengine_cce_cluster_v3.cluster.id
   name              = "${var.project}-node-${random_string.id.result}"
   flavor_id         = "s3.large.2"
-  availability_zone = "eu-west-0a"
+  availability_zone = "eu-west-0b"
   key_pair          = flexibleengine_compute_keypair_v2.keypair.name
 
   root_volume {
