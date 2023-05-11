@@ -4,7 +4,7 @@ variable "project" {
 }
 
 variable "dns_zone_name" {
-  default = "demofe.services"
+  default = "demo.services"
   description = "private DNS zone"
 }
 
