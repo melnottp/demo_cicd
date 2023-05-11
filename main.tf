@@ -22,7 +22,7 @@ terraform {
 
 provider "flexibleengine" {
   domain_name = "OCB0001661"
-  tenant_name = "eu-west-0_wb"
+  tenant_name = "eu-west-0_pme"
   region      = "eu-west-0"
   auth_url    = "https://iam.eu-west-0.prod-cloud-ocb.orange-business.com/v3"
 }
@@ -70,6 +70,8 @@ resource "flexibleengine_vpc_subnet_v1" "front_subnet" {
   cidr       = "${var.front_subnet_cidr}"
   gateway_ip = "${var.front_gateway_ip}"
   vpc_id     = flexibleengine_vpc_v1.vpc.id
+  primary_dns = "100.125.0.41"
+  secondary_dns = "100.126.0.41"
 }
 
 # Create Backend subnet inside the network
@@ -78,6 +80,8 @@ resource "flexibleengine_vpc_subnet_v1" "back_subnet" {
   cidr       = "${var.back_subnet_cidr}"
   gateway_ip = "${var.back_gateway_ip}"
   vpc_id     = flexibleengine_vpc_v1.vpc.id
+  primary_dns = "100.125.0.41"
+  secondary_dns = "100.126.0.41"
 }
 
 #Create an Elastic IP for Bastion VM
