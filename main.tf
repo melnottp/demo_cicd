@@ -120,7 +120,7 @@ resource "flexibleengine_networking_secgroup_rule_v2" "mysql_rule_ingress4" {
   protocol          = "tcp"
   port_range_min    = "${var.mysql_port}"
   port_range_max    = "${var.mysql_port}"
-  remote_ip_prefix  = "${var.back_subnet_cidr}"
+  remote_ip_prefix  = "${var.any_ip}"
   security_group_id = flexibleengine_networking_secgroup_v2.secgroup.id
 }
 
