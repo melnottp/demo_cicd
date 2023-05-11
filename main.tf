@@ -357,7 +357,7 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   initial_node_count = 1
   min_node_count = 1
   max_node_count = 10
-  scale_enable = enable
+  scale_enable = true
   type = "vm"
   labels = {
     pool = "${var.project}-pool"
