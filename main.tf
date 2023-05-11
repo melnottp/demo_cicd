@@ -355,7 +355,9 @@ resource "flexibleengine_cce_node_pool_v3" "pool" {
   flavor_id = "s3.large.2"
   key_pair = flexibleengine_compute_keypair_v2.keypair.name
   initial_node_count = 1
-  scale_enable = false
+  min_node_count = 1
+  max_node_count = 10
+  scale_enable = enable
   type = "vm"
   labels = {
     pool = "${var.project}-pool"
