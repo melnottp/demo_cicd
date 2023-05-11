@@ -346,21 +346,28 @@ resource "time_sleep" "wait_for_cce" {
   depends_on = [flexibleengine_cce_cluster_v3.cluster]
 }
 
-#Create a node inside the CCE cluster
-resource "flexibleengine_cce_node_v3" "node_1" {
+#Create a nodepool inside the CCE cluster 
+resource "flexibleengine_cce_node_pool_v3" "pool" {
   depends_on = [time_sleep.wait_for_cce]
-  cluster_id        = flexibleengine_cce_cluster_v3.cluster.id
-  name              = "${var.project}-node-${random_string.id.result}"
-  flavor_id         = "s3.large.2"
-  availability_zone = "eu-west-0b"
-  key_pair          = flexibleengine_compute_keypair_v2.keypair.name
-
+  name       = "${var.project}-node-pool-${random_string.id.result}"
+  cluster_id = flexibleengine_cce_cluster_v3.cluster.id
+  os        = "EulerOS 2.9"
+  flavor_id = "s3.large.2"
+  key_pair = flexibleengine_compute_keypair_v2.keypair.name
+  initial_node_count = 1
+  scale_enable = false
+  type = "vm"
+  labels = {
+    pool = "${var.project}-pool"
+  }
   root_volume {
-    size       = 40
+    size       = "40"
     volumetype = "SATA"
   }
+
   data_volumes {
-    size       = 100
+    size       = "100"
     volumetype = "SATA"
   }
 }
+
