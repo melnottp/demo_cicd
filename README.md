@@ -61,6 +61,11 @@ That will provision infrastructure in a remote environment that is optimized for
 ![](images/demo.png)
 
 Show ressource creation on FE
-Create wordpress user and table with Data Admin Service
+
+Create wordpress user and table with Data Admin Service :
+https://github.com/melnottp/demo_cicd/blob/main/wordpress/mysql.txt
+
 Create a deployment in CCE
+https://github.com/melnottp/demo_cicd/blob/main/wordpress/wordpress.yaml
+
 Create EVS volume named cce-evs-wp as in wordpress.yaml
