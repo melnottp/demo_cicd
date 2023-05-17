@@ -59,3 +59,8 @@ That will provision infrastructure in a remote environment that is optimized for
 # Demonstration
 
 ![](images/demo.png)
+
+Show ressource creation on FE
+Create wordpress user and table with Data Admin Service
+Create a deployment in CCE
+Create EVS volume named cce-evs-wp as in wordpress.yaml
